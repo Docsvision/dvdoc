@@ -9,8 +9,9 @@
 			.vers(:id="version.fileVersion")
 				.row.items-center
 					.q-mr-md(v-if="version.metadata.isPublic === true") Обновление
-					q-btn( dense unelevated color="accent" v-if="version.metadata.isPublic === true").q-mr-md.nocursor
+					q-btn(dense unelevated color="accent" v-if="version.metadata.isPublic === true" @click="copy(version)").q-mr-md
 						component(:is="SvgIcon" name="source-branch" color="white")
+						q-tooltip Скопировать ссылку
 					a(:class="{ link : version.metadata.downloadLink}" :href="version.metadata.downloadLink" target="_blank" v-if="version.metadata.isPublic === true").lin
 						component(:is="WordHighlighter" :query="filter") {{version.fileVersion}}
 					div(v-else) Войдет в следующее накопительное обновление
@@ -167,6 +168,19 @@ const calcLink = (e: Version) => {
 		return ''
 	} else return 'link'
 }
+
+async function copyURL(mytext) {
+	try {
+		await navigator.clipboard.writeText(mytext)
+	} catch ($e) {
+		console.log('Can not copy')
+	}
+}
+
+const copy = (e: Version) => {
+	const copiedUrl = window.location.href + '#' + e.fileVersion
+	copyURL(copiedUrl)
+}
 </script>
 
 <style scoped lang="scss">
@@ -232,9 +246,9 @@ a:hover {
 	border-left: 3px solid $accent;
 }
 
-.nocursor {
-	cursor: default;
-}
+// .nocursor {
+// 	cursor: default;
+// }
 
 .link {
 	cursor: pointer;
