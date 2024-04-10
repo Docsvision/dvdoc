@@ -169,7 +169,7 @@ const calcLink = (e: Version) => {
 	} else return 'link'
 }
 
-async function copyURL(mytext) {
+async function copyURL(mytext: string) {
 	try {
 		await navigator.clipboard.writeText(mytext)
 	} catch ($e) {
