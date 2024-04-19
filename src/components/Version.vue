@@ -178,7 +178,8 @@ async function copyURL(mytext: string) {
 }
 
 const copy = (e: Version) => {
-	const copiedUrl = window.location.href + '#' + e.fileVersion
+	const cleanUrl = window.location.href.split('#')[0]
+	const copiedUrl = cleanUrl + '#' + e.fileVersion
 	copyURL(copiedUrl)
 }
 </script>
