@@ -47,7 +47,7 @@
 			hr( v-if="version.metadata.isPublic === false")
 
 	.side
-		q-input(dense debounce="300" placeholder="Фильтр" autofocus color="primary" v-model="filter" clearable clear-icon="img:/_/img/close-circle-outline.svg" @clear="clear")
+		q-input(dense debounce="300" placeholder="Фильтр" color="primary" v-model="filter" clearable clear-icon="img:/_/img/close-circle-outline.svg" @clear="clear")
 			template(v-slot:prepend)
 				SvgIcon(name="magnify").magnify
 		br
