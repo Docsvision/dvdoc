@@ -48,4 +48,17 @@ export default defineConfig({
 	build: {
 		minify: true,
 	},
+	server: {
+		proxy: {
+			'^/.*/patches.min.js': {
+				target: 'http://127.0.0.1:3000',
+				rewrite: () => '/patches.js',
+			},
+			'^/(_|api|dv\\d)/': {
+				target: 'https://help.docsvision.com',
+				changeOrigin: true,
+			},
+
+		},
+	},
 })

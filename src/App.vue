@@ -29,7 +29,7 @@ const loading = ref(true)
 
 // end local testing *************************************
 
-const host = window.location.protocol + '//' + window.location.hostname
+const host = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '')
 const apiUrl = computed(() => {
 	return (
 		host +
