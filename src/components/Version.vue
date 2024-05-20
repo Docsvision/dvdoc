@@ -5,7 +5,7 @@
 		template(v-if="filtered.length === 0")
 			.notfound
 				q-icon(name="mdi-emoticon-cry-outline" size="md").q-mr-md
-				span Ничего нет. Попробуйте изменить запрос.
+				span Ничего нет. Попробуйте изменить запрос...
 		template(v-else v-for="(version, index) in filtered" :key="version.id")
 			.version(:id="version.ver")
 				.row.items-center
