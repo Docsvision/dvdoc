@@ -6,45 +6,48 @@
 		template(v-if="!props.loading && filtered.length === 0")
 			.notfound Ничего нет. Попробуйте изменить запрос.
 		template(v-for="version in filtered" :key="version.id")
-			.vers(:id="version.fileVersion")
-				.row.items-center
-					.q-mr-md(v-if="version.metadata.isPublic === true") Обновление
-					q-btn(dense unelevated color="accent" v-if="version.metadata.isPublic === true" @click="copy(version)").q-mr-md
-						component(:is="SvgIcon" name="source-branch" color="white")
-						q-tooltip Скопировать ссылку
-					a(:class="{ link : version.metadata.downloadLink}" :href="version.metadata.downloadLink" target="_blank" v-if="version.metadata.isPublic === true").lin
-						component(:is="WordHighlighter" :query="filter") {{version.fileVersion}}
-					div(v-else) Войдет в следующее накопительное обновление
+			.build(:id="version.id" 
+				@click="redirectToTimeline(version, $event)"
+				:class="{build_grouped: version.groupId !== 0}")
+				.vers(:id="version.fileVersion")
+					.row.items-center
+						.q-mr-md(v-if="version.metadata.isPublic === true") Обновление
+						q-btn(dense unelevated color="accent" v-if="version.metadata.isPublic === true" @click="copy(version)").q-mr-md
+							component(:is="SvgIcon" name="source-branch" color="white")
+							q-tooltip Скопировать ссылку
+						a(:class="{ link : version.metadata.downloadLink}" :href="version.metadata.downloadLink" target="_blank" v-if="version.metadata.isPublic === true").lin
+							component(:is="WordHighlighter" :query="filter") {{version.fileVersion}}
+						div(v-else) Войдет в следующее накопительное обновление
 
-				component(:is="Dateblock" :filter="filter" :version="version")
+					component(:is="Dateblock" :filter="filter" :version="version")
 
-			q-list(v-intersection="intersectionObject" :id="version.id")
-				template(v-for="(item) in version.children")
-					q-expansion-item(v-if="item.children.length > 0"
-						:key="item.id"
-						:label="item.head"
-						header-class="hd"
-						:icon="showIcon(item.icon)"
-						expand-separator
-						expand-icon="img:/_/img/chevron-down.svg"
-						:model-value="item.model"
-						@click="myitems.toggleModel(item)")
+				q-list(v-intersection="intersectionObject" :id="version.id")
+					template(v-for="(item) in version.children")
+						q-expansion-item(v-if="item.children.length > 0"
+							:key="item.id"
+							:label="item.head"
+							header-class="hd"
+							:icon="showIcon(item.icon)"
+							expand-separator
+							expand-icon="img:/_/img/chevron-down.svg"
+							:model-value="item.model"
+							@click="toggleModel(item, $event)")
 
-						q-card-section(v-for="el in item.children" :key="el.title")
-							.smallgrid
-								.label
-									component(:is="WordHighlighter" :query="filter") {{el.title}}
-								.sborka(v-if="!version.metadata.isPublic")
-									component(:is="WordHighlighter" :query="filter") {{el.fileVersion}}
-								div(v-else)
-								.text
-									component(:is="WordHighlighter" :query="filter") {{el.description}}
-									br
-									q-btn(v-if="el.detailed" unelevated color="accent" label="Еще" size="xs" @click="more(item.id, el.title)")
-							.more.hid(:id="setId(item.id, el.title)" v-if="el.detailed")
-								div(v-html="el.detailed")
+							q-card-section(v-for="el in item.children" :key="el.title")
+								.smallgrid
+									.label
+										component(:is="WordHighlighter" :query="filter") {{el.title}}
+									.sborka(v-if="!version.metadata.isPublic")
+										component(:is="WordHighlighter" :query="filter") {{el.fileVersion}}
+									div(v-else)
+									.text
+										component(:is="WordHighlighter" :query="filter") {{el.description}}
+										br
+										q-btn(v-if="el.detailed" unelevated color="accent" label="Еще" size="xs" @click="more(item.id, el.title)")
+								.more.hid(:id="setId(item.id, el.title)" v-if="el.detailed")
+									div(v-html="el.detailed")
 
-			hr( v-if="version.metadata.isPublic === false")
+				hr( v-if="version.metadata.isPublic === false")
 
 	.side
 		q-input(dense debounce="300" placeholder="Фильтр" color="primary" v-model="filter" clearable clear-icon="img:/_/img/close-circle-outline.svg" @clear="clear")
@@ -108,6 +111,12 @@ const { getScrollTarget, setVerticalScrollPosition } = scroll
 const filter = ref('')
 const clear = () => {
 	filter.value = ''
+}
+
+const toggleModel = (item: Children, event: PointerEvent) => {
+	event.stopPropagation()
+
+	myitems.toggleModel(item)
 }
 
 const handleScroll = (e: string) => {
@@ -181,6 +190,19 @@ const copy = (e: Version) => {
 	const cleanUrl = window.location.href.split('#')[0]
 	const copiedUrl = cleanUrl + '#' + e.fileVersion
 	copyURL(copiedUrl)
+}
+
+const getProductVersionName = (fileVersion: string) => {
+	if (fileVersion.startsWith("5")) return "dv5";
+
+	return "dv6";
+}
+
+const redirectToTimeline = (version: Myversion, event: PointerEvent) => {
+	if (!version.groupId) return
+
+	const url = "/" + getProductVersionName(version.fileVersion) + "/timeline?showgroupedonly" 
+	window.history.pushState({}, "", url)
 }
 </script>
 

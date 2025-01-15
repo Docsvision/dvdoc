@@ -25,6 +25,7 @@ const props = defineProps<{
 const myitems = useItems()
 
 const handleClick = (e: any, version: any) => {
+	e.stopPropagation()
 	if (e.shiftKey) {
 		myitems.toggleAll()
 	} else myitems.expandBlock(version)

@@ -67,6 +67,7 @@ const getData = () => {
 				let temp = {} as Myversion
 				temp.id = item.id
 				temp.fileVersion = item.fileVersion
+				temp.groupId = item.groupId
 				temp.metadata = {} as Metadata
 				Object.assign(temp.metadata, item.metadata)
 				temp.children = [

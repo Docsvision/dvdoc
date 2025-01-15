@@ -28,6 +28,7 @@ export const useItems = defineStore({
 				return {
 					id: item.id,
 					fileVersion: item.fileVersion,
+					groupId: item.groupId,
 					metadata: item.metadata,
 					children: item.children?.map((el) => {
 						return {
@@ -47,6 +48,7 @@ export const useItems = defineStore({
 				return {
 					id: item.id,
 					fileVersion: item.fileVersion,
+					groupId: item.groupId,
 					metadata: item.metadata,
 					children: item.children?.map((el) => {
 						return {

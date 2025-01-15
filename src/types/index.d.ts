@@ -33,6 +33,7 @@ interface Metadata {
 interface Version {
 	id: number
 	fileVersion: string
+	groupId: number
 	metadata: Metadata
 	changes: Err[]
 }
@@ -40,6 +41,7 @@ interface Version {
 interface Myversion {
 	id: number
 	fileVersion: string
+	groupId: number
 	metadata: Metadata
 	children: Children[]
 }
