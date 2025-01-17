@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import Version from '@/components/Version.vue'
 import { onBeforeMount } from 'vue'
 import { useItems } from '@/stores/items'
+import { useGroups } from '@/stores/groups'
 // import { dumb } from '@/stores/dumb'
 
 const myitems = useItems()
@@ -14,35 +15,37 @@ const empty = ref(false)
 const err = ref(false)
 const loading = ref(true)
 
+const myGroups = useGroups()
+
 // this block for local testing *************************
 
-// const host = 'https://help.docsvision.com'
-// const apiUrl = computed(() => {
-// 	return (
-// 		// 'https://help.docsvision.com/api/changelog/tree/webclient/5.5.17?offset=' +
-// 		'https://help.docsvision.com/api/changelog/tree/documentmgmt/5.5.4?offset=' +
-// 		myoffset.value +
-// 		'&limit=' +
-// 		mylimit.value
-// 	)
-// })
-
-// end local testing *************************************
-
-const host = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '')
+const host = 'https://help.docsvision.com'
 const apiUrl = computed(() => {
 	return (
-		host +
-		'/api/changelog/tree/' +
-		component +
-		'/' +
-		version?.attributes.getNamedItem('content')?.textContent +
-		'?offset=' +
+		'https://help.docsvision.com/api/changelog/tree/webclient/5.5.17?offset=' +
+		// 'https://help.docsvision.com/api/changelog/tree/documentmgmt/5.5.4?offset=' +
 		myoffset.value +
 		'&limit=' +
 		mylimit.value
 	)
 })
+
+// end local testing *************************************
+
+// const host = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '')
+// const apiUrl = computed(() => {
+// 	return (
+// 		host +
+// 		'/api/changelog/tree/' +
+// 		component +
+// 		'/' +
+// 		version?.attributes.getNamedItem('content')?.textContent +
+// 		'?offset=' +
+// 		myoffset.value +
+// 		'&limit=' +
+// 		mylimit.value
+// 	)
+// })
 
 const component = document
 	.querySelector('meta[name="page-component"]')
@@ -153,7 +156,21 @@ const getData = () => {
 		})
 }
 
-onBeforeMount(() => getData())
+const apiGroupsUrl = host + "/api/groups"
+
+const getGroups = async () => {
+	const response = await fetch(apiGroupsUrl)
+	const data = await response.json()
+
+	if (!response.ok) return
+
+	myGroups.setGroups(data)
+}
+
+onBeforeMount(() => {
+	getData()
+	getGroups()
+})
 // onBeforeMount(() => {
 // 	myitems.setVersions([...dumb])
 // 	loading.value = false

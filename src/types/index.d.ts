@@ -45,3 +45,10 @@ interface Myversion {
 	metadata: Metadata
 	children: Children[]
 }
+
+interface Group {
+	id: number;
+	title: string;
+	description?: string;
+	builds?: Version[];
+  }

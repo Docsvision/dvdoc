@@ -6,10 +6,8 @@
 		template(v-if="!props.loading && filtered.length === 0")
 			.notfound Ничего нет. Попробуйте изменить запрос.
 		template(v-for="version in filtered" :key="version.id")
-			.build(:id="version.id" 
-				@click="redirectToTimeline(version, $event)"
-				:class="{build_grouped: version.groupId !== 0}")
-				.vers(:id="version.fileVersion")
+			.build(:id="version.id")
+				.vers(:id="version.fileVersion" :class="{'vers-grid': version.groupId !== 0}")
 					.row.items-center
 						.q-mr-md(v-if="version.metadata.isPublic === true") Обновление
 						q-btn(dense unelevated color="accent" v-if="version.metadata.isPublic === true" @click="copy(version)").q-mr-md
@@ -18,7 +16,9 @@
 						a(:class="{ link : version.metadata.downloadLink}" :href="version.metadata.downloadLink" target="_blank" v-if="version.metadata.isPublic === true").lin
 							component(:is="WordHighlighter" :query="filter") {{version.fileVersion}}
 						div(v-else) Войдет в следующее накопительное обновление
-
+					div(v-if="version.groupId !== 0")
+						p(class="group-title") Входит в 
+							a(class="group-link" :href="getRedirectLink(version)") {{groupTitleById(version.groupId)}}
 					component(:is="Dateblock" :filter="filter" :version="version")
 
 				q-list(v-intersection="intersectionObject" :id="version.id")
@@ -31,7 +31,7 @@
 							expand-separator
 							expand-icon="img:/_/img/chevron-down.svg"
 							:model-value="item.model"
-							@click="toggleModel(item, $event)")
+							@click="myitems.toggleModel(item)")
 
 							q-card-section(v-for="el in item.children" :key="el.title")
 								.smallgrid
@@ -67,11 +67,13 @@ import { ref, computed, watchEffect } from 'vue'
 import { scroll } from 'quasar'
 import WordHighlighter from 'vue-word-highlighter'
 import { useItems } from '@/stores/items'
+import { useGroups } from '@/stores/groups'
 import type { Ref } from 'vue'
 import SvgIcon from '@/components/SvgIcon.vue'
 import Dateblock from '@/components/Dateblock.vue'
 import axios from 'axios'
 import NotFound from '@/components/NotFound.vue'
+import { storeToRefs } from 'pinia'
 
 const props = defineProps({
 	loading: {
@@ -106,17 +108,14 @@ const intersectionObject = {
 	},
 }
 const myitems = useItems()
+const myGoups = useGroups()
+
+const { groupTitleById } = storeToRefs(myGoups)
 
 const { getScrollTarget, setVerticalScrollPosition } = scroll
 const filter = ref('')
 const clear = () => {
 	filter.value = ''
-}
-
-const toggleModel = (item: Children, event: PointerEvent) => {
-	event.stopPropagation()
-
-	myitems.toggleModel(item)
 }
 
 const handleScroll = (e: string) => {
@@ -198,11 +197,11 @@ const getProductVersionName = (fileVersion: string) => {
 	return "dv6";
 }
 
-const redirectToTimeline = (version: Myversion, event: PointerEvent) => {
+const getRedirectLink = (version: Myversion) => {
 	if (!version.groupId) return
 
 	const url = "/" + getProductVersionName(version.fileVersion) + "/timeline?showgroupedonly" 
-	window.history.pushState({}, "", url)
+	return url
 }
 </script>
 
