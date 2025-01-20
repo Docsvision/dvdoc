@@ -200,7 +200,7 @@ const getProductVersionName = (fileVersion: string) => {
 const getRedirectLink = (version: Myversion) => {
 	if (!version.groupId) return
 
-	const url = "/" + getProductVersionName(version.fileVersion) + "/timeline?showgroupedonly" 
+	const url = "/" + getProductVersionName(version.fileVersion) + `/timeline?groupId=${version.groupId}` 
 	return url
 }
 </script>

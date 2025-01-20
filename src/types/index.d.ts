@@ -47,8 +47,9 @@ interface Myversion {
 }
 
 interface Group {
-	id: number;
-	title: string;
-	description?: string;
-	builds?: Version[];
+	id: number
+	title: string
+	description?: string
+	builds?: Version[]
+	publishDate?: string
   }
