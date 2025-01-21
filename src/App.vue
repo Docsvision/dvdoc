@@ -19,33 +19,33 @@ const myGroups = useGroups()
 
 // this block for local testing *************************
 
-const host = 'https://help.docsvision.com'
-const apiUrl = computed(() => {
-	return (
-		'https://help.docsvision.com/api/changelog/tree/webclient/5.5.17?offset=' +
-		// 'https://help.docsvision.com/api/changelog/tree/documentmgmt/5.5.4?offset=' +
-		myoffset.value +
-		'&limit=' +
-		mylimit.value
-	)
-})
-
-// end local testing *************************************
-
-// const host = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '')
+// const host = 'https://help.docsvision.com'
 // const apiUrl = computed(() => {
 // 	return (
-// 		host +
-// 		'/api/changelog/tree/' +
-// 		component +
-// 		'/' +
-// 		version?.attributes.getNamedItem('content')?.textContent +
-// 		'?offset=' +
+// 		'https://help.docsvision.com/api/views/timeline/webclient/5.5.17?offset=' +
+// 		// 'https://help.docsvision.com/api/views/timeline/documentmgmt/5.5.4?offset=' +
 // 		myoffset.value +
 // 		'&limit=' +
 // 		mylimit.value
 // 	)
 // })
+
+// end local testing *************************************
+
+const host = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '')
+const apiUrl = computed(() => {
+	return (
+		host +
+		'/api/views/timeline' +
+		component +
+		'/' +
+		version?.attributes.getNamedItem('content')?.textContent +
+		'?offset=' +
+		myoffset.value +
+		'&limit=' +
+		mylimit.value
+	)
+})
 
 const component = document
 	.querySelector('meta[name="page-component"]')
