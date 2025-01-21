@@ -36,7 +36,7 @@ const host = window.location.protocol + '//' + window.location.hostname + (windo
 const apiUrl = computed(() => {
 	return (
 		host +
-		'/api/views/timeline' +
+		'/api/views/timeline/' +
 		component +
 		'/' +
 		version?.attributes.getNamedItem('content')?.textContent +
