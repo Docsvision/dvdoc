@@ -13,7 +13,7 @@
 						q-btn(dense unelevated color="accent" v-if="version.metadata.isPublic === true" @click="copy(version)").q-mr-md
 							component(:is="SvgIcon" name="source-branch" color="white")
 							q-tooltip Скопировать ссылку
-						a(:class="{ link : version.metadata.downloadLink}" :href="version.metadata.downloadLink" target="_blank" v-if="version.metadata.isPublic === true").lin
+						a(:class="{ link : version.metadata.downloadLink}" :href="version.metadata.downloadLink" target="_blank" v-if="version.metadata.isPublic === true").link
 							component(:is="WordHighlighter" :query="filter") {{version.fileVersion}}
 						div(v-else) Войдет в следующее накопительное обновление
 					div(v-if="version.groupId !== 0")
@@ -215,11 +215,16 @@ a:hover {
 	display: grid;
 	grid-template-columns: 96px auto 1fr;
 	column-gap: 3.2rem;
-	font-size: 1rem;
+	font-size: $text-font-size;
 	line-height: 120%;
 	align-items: start;
 	// margin-bottom: 1rem;
+
+	@media screen and (min-width: 1024px) {
+		font-size: $text-font-size-desktop;
+	}
 }
+
 @media screen and (max-width: 760px) {
 	.smallgrid {
 		grid-template-columns: 1fr;
