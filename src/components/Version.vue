@@ -10,7 +10,7 @@
 				.vers(:id="version.fileVersion" :class="{'vers-grid': version.groupId !== 0}")
 					.row.items-center
 						.q-mr-md(v-if="version.metadata.isPublic === true") Обновление
-						q-btn(dense unelevated color="accent" v-if="version.metadata.isPublic === true" @click="copy(version)").q-mr-md
+						q-btn(dense unelevated color="accent" v-if="version.metadata.isPublic === true" @click="copy(version)").q-mr-md.copy
 							component(:is="SvgIcon" name="source-branch" color="white")
 							q-tooltip Скопировать ссылку
 						a(:class="{ link : version.metadata.downloadLink}" :href="version.metadata.downloadLink" target="_blank" v-if="version.metadata.isPublic === true").link
@@ -206,14 +206,21 @@ const getRedirectLink = (version: Myversion) => {
 </script>
 
 <style scoped lang="scss">
+:deep(.q-item) {
+	padding: 8px 0;
+
+	@media screen and (min-width: 1024px) {
+		padding: 8px 16px;
+	}
+}
+
 a:hover {
 	text-decoration: none;
 }
 
 .smallgrid {
-	margin-left: 4rem;
 	display: grid;
-	grid-template-columns: 96px auto 1fr;
+	grid-template-columns: 1fr;
 	column-gap: 3.2rem;
 	font-size: $text-font-size;
 	line-height: 120%;
@@ -221,19 +228,31 @@ a:hover {
 	// margin-bottom: 1rem;
 
 	@media screen and (min-width: 1024px) {
+		padding-left: 4rem;
+		grid-template-columns: 96px auto 1fr;
 		font-size: $text-font-size-desktop;
 	}
 }
 
-@media screen and (max-width: 760px) {
-	.smallgrid {
-		grid-template-columns: 1fr;
+.q-card__section {
+	padding: 16px 0;
+
+	@media screen and (min-width: 1024px) {
+		padding: 16px;
 	}
 }
 
 .label {
 	font-weight: 500;
 	font-style: italic;
+}
+
+.copy {
+	display: none;
+
+	@media screen and (min-width: 600px) {
+		display: block;
+	}
 }
 
 .notfound {

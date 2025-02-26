@@ -6,7 +6,7 @@
 		// span(v-else) -- | --
 	q-btn(v-if="filter.length < 1" dense flat round
 		color="accent"
-		@click="handleClick($event, props.version)" )
+		@click="handleClick($event, props.version)" ).expand-btn
 		q-tooltip(anchor="top middle" self="bottom middle") Shif-Click - распахнуть все
 		component(:is="SvgIcon" name="unfold-more-horizontal")
 </template>
@@ -53,4 +53,13 @@ const formattedDate = computed(() => {
 
 <style scoped lang="scss">
 //@import '@/assets/css/colors.scss';
+.expand-btn {
+	position: absolute;
+	top: 4px;
+	right: 12px;
+
+	@media screen and (min-width: 1024px) {
+		position: static;
+	}
+}
 </style>
