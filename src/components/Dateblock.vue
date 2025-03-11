@@ -56,10 +56,12 @@ const formattedDate = computed(() => {
 .expand-btn {
 	position: absolute;
 	top: 4px;
-	right: 12px;
+	right: -4px;
 
 	@media screen and (min-width: 1024px) {
-		position: static;
+		position: relative;
+		top: 0;
+		right: 4px;
 	}
 }
 </style>
