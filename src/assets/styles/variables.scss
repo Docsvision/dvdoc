@@ -1,5 +1,5 @@
 // Fonts
-$rem: var(--rem-base, 17);
+$rem: var(--rem-base, 18);
 
 $main-font-size: var(--body-font-size, 1.0625em);
 $main-font-size-desktop: var(--body-font-size--desktop, 1.125em);
@@ -12,6 +12,9 @@ $small-text-font-size-desktop: calc(13.5 /  #{$rem} * 1rem);
 
 $search-input-font-size: calc(17 / #{$rem} * 1rem);
 $search-input-font-size-desktop: calc(15.5 / #{$rem} * 1rem);
+
+$side-menu-title-font-size: calc(16 / #{$rem} * 1rem);
+$side-menu-title-font-size-desktop: calc(15 / #{$rem} * 1rem);
 
 $section-title-font-size:  1.17em;
 

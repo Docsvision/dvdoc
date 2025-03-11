@@ -48,18 +48,18 @@
 									div(v-html="el.detailed")
 
 				hr( v-if="version.metadata.isPublic === false")
-
 	.side
-		q-input(dense debounce="300" placeholder="Фильтр" color="primary" v-model="filter" clearable clear-icon="img:/_/img/close-circle-outline.svg" @clear="clear")
-			template(v-slot:prepend)
-				SvgIcon(name="magnify").magnify
-		br
-		.sod Содержание
-		.list
-			.empt(v-for="item in filtered" @click="handleScroll(item.fileVersion)" :key="item.fileVersion" :class="calcClass(item.id)")
-				span(v-if="item.metadata.isPublic === true") {{item.fileVersion}}
-				span(v-else) Войдет в следующее обновление
-		NotFound(:show="errorDialog" @close="errorDialog = false")
+		.sidebar
+			q-input(dense debounce="300" placeholder="Фильтр" color="primary" v-model="filter" clearable clear-icon="img:/_/img/close-circle-outline.svg" @clear="clear").search
+				template(v-slot:prepend)
+					SvgIcon(name="magnify").magnify
+			br
+			.sod Содержание
+			.list
+				.empt(v-for="item in filtered" @click="handleScroll(item.fileVersion)" :key="item.fileVersion" :class="calcClass(item.id)")
+					span(v-if="item.metadata.isPublic === true") {{item.fileVersion}}
+					span(v-else) Войдет в следующее обновление
+			NotFound(:show="errorDialog" @close="errorDialog = false")
 </template>
 
 <script setup lang="ts">
@@ -223,9 +223,7 @@ a:hover {
 	grid-template-columns: 1fr;
 	column-gap: 3.2rem;
 	font-size: $text-font-size;
-	line-height: 120%;
 	align-items: start;
-	// margin-bottom: 1rem;
 
 	@media screen and (min-width: 1024px) {
 		padding-left: 4rem;
@@ -289,7 +287,9 @@ a:hover {
 }
 
 .visib {
-	border-left: 3px solid $accent;
+	@media screen and (min-width: 1400px) {
+		border-left: 3px solid $accent;
+	}
 }
 
 // .nocursor {
@@ -304,6 +304,10 @@ a:hover {
 	&:hover {
 		text-decoration: underline;
 	}
+}
+
+.search {
+	max-width: 230px;
 }
 
 .myrow {
