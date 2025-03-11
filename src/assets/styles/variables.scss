@@ -1,0 +1,18 @@
+// Fonts
+$rem: var(--rem-base, 17);
+
+$main-font-size: var(--body-font-size, 1.0625em);
+$main-font-size-desktop: var(--body-font-size--desktop, 1.125em);
+$main-font-size-print: var(--body-font-size--print, 0.9375em);
+$text-font-size: var(--doc-font-size, inherit);
+$text-font-size-desktop: var(--doc-font-size--desktop, calc(17 / #{$rem} * 1rem));
+
+$small-text-font-size: calc(15 /  #{$rem} * 1rem);
+$small-text-font-size-desktop: calc(13.5 /  #{$rem} * 1rem);
+
+$search-input-font-size: calc(17 / #{$rem} * 1rem);
+$search-input-font-size-desktop: calc(15.5 / #{$rem} * 1rem);
+
+$section-title-font-size:  1.17em;
+
+$build-title-font-size: 1.5em;
