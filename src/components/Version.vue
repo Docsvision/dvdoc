@@ -292,10 +292,6 @@ a:hover {
 	}
 }
 
-// .nocursor {
-// 	cursor: default;
-// }
-
 .link {
 	cursor: pointer;
 	color: $accent;
