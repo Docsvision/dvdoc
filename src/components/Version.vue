@@ -274,11 +274,23 @@ a:hover {
 }
 
 .more {
-	font-size: 1.1rem;
+	font-size: $text-font-size;
 	margin-left: 4rem;
+
+	@media screen and (min-width: 1024px) {
+		font-size: $text-font-size-desktop;
+	}
 
 	&.hid {
 		display: none;
+	}
+
+	& * {
+		font-size: $text-font-size!important;
+
+		@media screen and (min-width: 1024px) {
+			font-size: $text-font-size-desktop!important;
+		}
 	}
 }
 
