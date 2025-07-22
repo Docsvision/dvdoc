@@ -5,7 +5,6 @@
 		span(v-if="props.version.metadata.publishDate") {{ formattedDate }}
 		// span(v-else) -- | --
 	q-btn(v-if="filter.length < 1" dense flat round
-		color="accent"
 		@click="handleClick($event, props.version)" ).expand-btn
 		q-tooltip(anchor="top middle" self="bottom middle") Shif-Click - распахнуть все
 		component(:is="SvgIcon" name="unfold-more-horizontal")
