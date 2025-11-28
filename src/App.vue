@@ -114,6 +114,14 @@ const getData = () => {
 						type: 5,
 						children: [],
 					},
+					{
+						id: 5,
+						head: 'Безопасность',
+						icon: 'security',
+						model: false,
+						type: 7,
+						children: [],
+					},
 				]
 				item.changes.forEach((change) => {
 					if (change.type == 3) {
@@ -130,6 +138,9 @@ const getData = () => {
 					}
 					if (change.type == 5) {
 						temp.children[4].children.push(change)
+					}
+					if (change.type == 7) {
+						temp.children[5].children.push(change)
 					}
 				})
 
