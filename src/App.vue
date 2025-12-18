@@ -37,9 +37,7 @@ const apiUrl = computed(() => {
 	return (
 		host +
 		'/api/views/timeline/' +
-		component +
-		'/' +
-		version?.attributes.getNamedItem('content')?.textContent +
+		apiComponentUrl +
 		'?offset=' +
 		myoffset.value +
 		'&limit=' +
@@ -51,7 +49,15 @@ const component = document
 	.querySelector('meta[name="page-component"]')
 	?.attributes.getNamedItem('content')?.textContent
 
-const version = document.querySelector('meta[name="page-version"]')
+const version = document
+	.querySelector('meta[name="page-version"]')
+	?.attributes.getNamedItem('content')?.textContent
+
+const productId = document
+	.querySelector('meta[name="page-product-id"]')
+	?.attributes.getNamedItem('content')?.textContent
+
+const apiComponentUrl = productId || (component + '/' + version)
 
 let data1 = [] as Myversion[]
 
