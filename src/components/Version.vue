@@ -29,7 +29,7 @@
 							header-class="hd"
 							:icon="showIcon(item.icon)"
 							expand-separator
-							expand-icon="img:/_/img/chevron-down.svg"
+							:expand-icon="showIcon('chevron-down')"
 							:model-value="item.model"
 							@click="myitems.toggleModel(item)")
 
@@ -50,7 +50,7 @@
 				hr( v-if="version.metadata.isPublic === false")
 	.side
 		.sidebar
-			q-input(dense debounce="300" placeholder="Фильтр" color="primary" v-model="filter" clearable clear-icon="img:/_/img/close-circle-outline.svg" @clear="clear").search
+			q-input(dense debounce="300" placeholder="Фильтр" color="primary" v-model="filter" clearable :clear-icon="showIcon('close-circle-outline')" @clear="clear").search
 				template(v-slot:prepend)
 					SvgIcon(name="magnify").magnify
 			br
@@ -166,8 +166,9 @@ const calcClass = (e: number) => {
 		return 'visib'
 	} else return ''
 }
+const uiRootPath = window.uiRootPath || '/_'
 const showIcon = (icon: string) => {
-	return 'img:/_/img/' + icon + '.svg'
+	return 'img:' + uiRootPath + '/img/' + icon + '.svg'
 }
 const errorDialog = ref(false)
 
